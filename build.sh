@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-ANDROID_HOME=/workspace/android-build/sdk
-JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+# Use ANDROID_HOME from environment if set, otherwise use local path
+ANDROID_HOME=${ANDROID_HOME:-/workspace/android-build/sdk}
+JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-17-openjdk-arm64}
 BUILD_TOOLS=$ANDROID_HOME/build-tools/34.0.0
 PLATFORM=$ANDROID_HOME/platforms/android-34
 
