@@ -15,7 +15,7 @@ fi
 
 cd $PROJECT_DIR
 BUILD_DIR=build
-mkdir -p $BUILD_DIR/{obj,gen,apk}
+mkdir -p $BUILD_DIR/{obj,gen,apk,dex}
 
 echo "Step 1: Compile resources with aapt2..."
 $BUILD_TOOLS/aapt2 compile --dir res -o $BUILD_DIR/compiled_resources.zip
