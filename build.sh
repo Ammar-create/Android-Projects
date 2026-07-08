@@ -31,16 +31,17 @@ $BUILD_TOOLS/aapt2 link \
 
 echo "Step 3: Compile Java sources..."
 find src -name "*.java" > $BUILD_DIR/sources.txt
+find $BUILD_DIR/gen -name "*.java" >> $BUILD_DIR/sources.txt
 javac -d $BUILD_DIR/obj \
   -classpath $PLATFORM/android.jar \
   -sourcepath src \
-  @$BUILD_DIR/sources.txt \
-  $BUILD_DIR/gen/**/R.java
+  @$BUILD_DIR/sources.txt
 
 echo "Step 4: Convert to DEX..."
+find $BUILD_DIR/obj -name "*.class" > $BUILD_DIR/classes.txt
 $BUILD_TOOLS/d8 --lib $PLATFORM/android.jar \
   --output $BUILD_DIR/dex \
-  $BUILD_DIR/obj/**/*.class
+  @$BUILD_DIR/classes.txt
 
 echo "Step 5: Add DEX to APK..."
 cd $BUILD_DIR/dex
