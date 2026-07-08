@@ -32,6 +32,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -146,7 +147,8 @@ public class MainActivity extends Activity {
     private TextView charCount, modelSelector;
     private View enhanceBtn, generateBtn, shuffleBtn;
     private LinearLayout styleChipsContainer;
-    private View refDropZone, refPlaceholder, refPreview;
+    private View refDropZone, refPlaceholder;
+    private ImageView refPreview;
 
     // Remix panel
     private View remixPanel;
@@ -746,7 +748,7 @@ public class MainActivity extends Activity {
         chip.setPadding(dp(12), dp(6), dp(12), dp(6));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.setEndMargin(dp(4));
+        lp.setMargins(0, 0, dp(4), 0);
         chip.setLayoutParams(lp);
 
         chip.setOnClickListener(v -> {
@@ -901,8 +903,7 @@ public class MainActivity extends Activity {
             card.setPadding(dp(8), dp(10), dp(8), dp(10));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-            lp.setMarginEnd(dp(4));
-            lp.setBottomMargin(dp(4));
+            lp.setMargins(0, 0, dp(4), dp(4));
             card.setLayoutParams(lp);
 
             final String actionPrompt = prompt;
@@ -1507,7 +1508,7 @@ public class MainActivity extends Activity {
 
                 LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                rowLp.setBottomMargin(dp(4));
+                rowLp.setMargins(0, 0, 0, dp(4));
                 row.setLayoutParams(rowLp);
                 deleteList.addView(row);
             }
