@@ -1,0 +1,13 @@
+ARCHITECTURE INCOMPATIBILITY DETECTED
+
+Downloaded: 457 MB of Android SDK tools
+Problem: Build tools are x86-64 binaries
+System: ARM64 (aarch64)
+
+Google does not provide ARM64 Linux build tools for Android SDK.
+
+SOLUTIONS:
+1. Use an x86-64 system (regular PC/laptop)
+2. Use Termux on Android (has ARM64 build tools)
+3. Use Android Studio (includes proper binaries)
+4. Build APKs on a cloud service
