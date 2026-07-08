@@ -30,6 +30,7 @@ jobs:
     
     - name: Generate debug keystore
       run: |
+        rm -f keystore.jks
         keytool -genkeypair -v -keystore keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias androidkey -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
       working-directory: projects/ReminderApp
     
