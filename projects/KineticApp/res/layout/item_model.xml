@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_card"
+    android:padding="@dimen/space_sm"
+    android:paddingHorizontal="@dimen/space_md"
+    android:layout_marginBottom="4dp">
+
+    <CheckBox android:id="@+id/modelCheck"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:buttonTint="@color/accent"
+        android:layout_marginEnd="@dimen/space_sm" />
+
+    <LinearLayout
+        android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_weight="1" android:orientation="vertical">
+        <TextView android:id="@+id/modelName"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textColor="@color/text" android:textSize="@dimen/text_sm" />
+        <TextView android:id="@+id/modelId"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textColor="@color/accent" android:textSize="10sp"
+            android:fontFamily="monospace" />
+    </LinearLayout>
+
+    <TextView android:id="@+id/modelRefBadge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="REF" android:textColor="@color/accent"
+        android:textSize="9sp" android:fontFamily="monospace"
+        android:background="@drawable/bg_chip_active"
+        android:paddingHorizontal="6dp" android:paddingVertical="1dp"
+        android:layout_marginStart="@dimen/space_sm"
+        android:visibility="gone" />
+</LinearLayout>

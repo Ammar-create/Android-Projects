@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg2"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_lg">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_lg">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Generate" android:textColor="@color/text"
+                android:textSize="@dimen/text_lg" android:textStyle="bold" />
+            <ImageView android:id="@+id/genPanelClose"
+                android:layout_width="36dp" android:layout_height="36dp"
+                android:src="@drawable/ic_close" android:padding="6dp"
+                android:background="@drawable/bg_ripple_accent"
+                android:contentDescription="Close" />
+        </LinearLayout>
+
+        <!-- Prompt Area -->
+        <FrameLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_sm">
+            <EditText android:id="@+id/promptInput"
+                android:layout_width="match_parent"
+                android:minHeight="90dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_hint"
+                android:background="@drawable/bg_input"
+                android:padding="@dimen/space_md"
+                android:paddingBottom="30dp"
+                android:textColor="@color/text" android:textColorHint="@color/text3"
+                android:textSize="@dimen/text_sm"
+                android:inputType="textMultiLine"
+                android:gravity="top|start"
+                android:scrollbars="vertical" />
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/space_md"
+                android:paddingBottom="@dimen/space_xs">
+                <TextView android:id="@+id/charCount"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" android:textColor="@color/text3"
+                    android:textSize="11sp" android:fontFamily="monospace" />
+                <ImageView android:id="@+id/shuffleBtn"
+                    android:layout_width="28dp" android:layout_height="28dp"
+                    android:src="@drawable/ic_shuffle" android:padding="4dp"
+                    android:contentDescription="Random prompt" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- Enhance Button -->
+        <TextView android:id="@+id/enhanceBtn"
+            android:layout_width="match_parent" android:layout_height="@dimen/btn_height"
+            android:gravity="center"
+            android:text="⚡  Enhance Prompt"
+            android:textColor="@color/text2" android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:background="@drawable/bg_btn_ghost"
+            android:layout_marginBottom="@dimen/space_lg" />
+
+        <!-- Model Selector Label -->
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/model_label" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_xs" />
+
+        <!-- Model Spinner -->
+        <TextView android:id="@+id/modelSelector"
+            android:layout_width="match_parent" android:layout_height="@dimen/input_height"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_input"
+            android:paddingHorizontal="@dimen/space_md"
+            android:textColor="@color/text" android:textSize="@dimen/text_sm"
+            android:drawableEnd="@drawable/ic_expand"
+            android:layout_marginBottom="@dimen/space_lg" />
+
+        <!-- Aspect Ratio Label -->
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/ratio_label" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_xs" />
+
+        <!-- Ratio Buttons -->
+        <LinearLayout android:id="@+id/ratioRow"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/space_lg">
+            <TextView android:id="@+id/ratioSquare"
+                android:layout_width="0dp" android:layout_height="@dimen/chip_height"
+                android:layout_weight="1"
+                android:text="1:1" android:gravity="center"
+                android:textColor="@color/text2" android:textSize="@dimen/text_xs"
+                android:background="@drawable/bg_chip"
+                android:layout_marginEnd="4dp" />
+            <TextView android:id="@+id/ratioPortrait"
+                android:layout_width="0dp" android:layout_height="@dimen/chip_height"
+                android:layout_weight="1"
+                android:text="3:4" android:gravity="center"
+                android:textColor="@color/text2" android:textSize="@dimen/text_xs"
+                android:background="@drawable/bg_chip"
+                android:layout_marginEnd="4dp" />
+            <TextView android:id="@+id/ratioLandscape"
+                android:layout_width="0dp" android:layout_height="@dimen/chip_height"
+                android:layout_weight="1"
+                android:text="16:9" android:gravity="center"
+                android:textColor="@color/accent" android:textSize="@dimen/text_xs"
+                android:textStyle="bold"
+                android:background="@drawable/bg_chip_active" />
+        </LinearLayout>
+
+        <!-- Count Label -->
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/count_label" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_xs" />
+
+        <!-- Count Buttons -->
+        <LinearLayout android:id="@+id/countRow"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/space_lg">
+            <TextView android:id="@+id/count1"
+                android:layout_width="44dp" android:layout_height="40dp"
+                android:text="1" android:gravity="center"
+                android:textColor="@color/accent" android:textSize="@dimen/text_sm"
+                android:textStyle="bold"
+                android:background="@drawable/bg_chip_active"
+                android:layout_marginEnd="8dp" />
+            <TextView android:id="@+id/count2"
+                android:layout_width="44dp" android:layout_height="40dp"
+                android:text="2" android:gravity="center"
+                android:textColor="@color/text2" android:textSize="@dimen/text_sm"
+                android:background="@drawable/bg_count_btn"
+                android:layout_marginEnd="8dp" />
+            <TextView android:id="@+id/count3"
+                android:layout_width="44dp" android:layout_height="40dp"
+                android:text="3" android:gravity="center"
+                android:textColor="@color/text2" android:textSize="@dimen/text_sm"
+                android:background="@drawable/bg_count_btn"
+                android:layout_marginEnd="8dp" />
+            <TextView android:id="@+id/count4"
+                android:layout_width="44dp" android:layout_height="40dp"
+                android:text="4" android:gravity="center"
+                android:textColor="@color/text2" android:textSize="@dimen/text_sm"
+                android:background="@drawable/bg_count_btn" />
+        </LinearLayout>
+
+        <!-- Style Label -->
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/style_label" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_xs" />
+
+        <!-- Style Chips -->
+        <HorizontalScrollView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginBottom="@dimen/space_lg">
+            <LinearLayout android:id="@+id/styleChips"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <!-- Reference Image Label -->
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/reference_image" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_xs" />
+
+        <!-- Reference Image Drop Zone -->
+        <FrameLayout android:id="@+id/refDropZone"
+            android:layout_width="match_parent" android:layout_height="100dp"
+            android:background="@drawable/bg_drop_zone"
+            android:layout_marginBottom="@dimen/space_lg">
+            <LinearLayout android:id="@+id/refPlaceholder"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:orientation="vertical" android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="+" android:textColor="@color/text3"
+                    android:textSize="28sp" />
+                <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/tap_to_add_ref" android:textColor="@color/text3"
+                    android:textSize="@dimen/text_xs" />
+            </LinearLayout>
+            <ImageView android:id="@+id/refPreview"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:scaleType="fitCenter" android:visibility="gone"
+                android:contentDescription="Reference" />
+        </FrameLayout>
+
+        <!-- Generate Button -->
+        <TextView android:id="@+id/generateBtn"
+            android:layout_width="match_parent" android:layout_height="52dp"
+            android:gravity="center"
+            android:text="@string/generate_btn"
+            android:textColor="@color/accent_text"
+            android:textSize="@dimen/text_md" android:textStyle="bold"
+            android:background="@drawable/bg_btn_generate"
+            android:layout_marginTop="@dimen/space_lg" />
+
+    </LinearLayout>
+</ScrollView>

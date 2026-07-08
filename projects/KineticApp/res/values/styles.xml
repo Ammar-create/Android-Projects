@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Kinetic Theme -->
+    <style name="KineticTheme" parent="android:Theme.Material.NoActionBar">
+        <item name="android:colorPrimary">@color/accent</item>
+        <item name="android:colorPrimaryDark">@color/bg</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/text2</item>
+        <item name="android:textColorHint">@color/text3</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <style name="KineticDialogTheme" parent="android:Theme.Material.Dialog.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.7</item>
+    </style>
+
+    <!-- Setup Theme (fullscreen) -->
+    <style name="KineticSetupTheme" parent="KineticTheme">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <!-- Text Styles -->
+    <style name="KineticText.Title">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">@dimen/text_xxl</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="KineticText.Heading">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">@dimen/text_lg</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="KineticText.Body">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">@dimen/text_md</item>
+    </style>
+    <style name="KineticText.Caption">
+        <item name="android:textColor">@color/text2</item>
+        <item name="android:textSize">@dimen/text_sm</item>
+    </style>
+    <style name="KineticText.Tiny">
+        <item name="android:textColor">@color/text3</item>
+        <item name="android:textSize">@dimen/text_xs</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+</resources>

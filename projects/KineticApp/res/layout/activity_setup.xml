@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="@dimen/space_xxl">
+
+        <!-- Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_maxWidth="420dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_dialog"
+            android:padding="@dimen/space_xxl">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/space_xl">
+
+                <ImageView
+                    android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_bolt"
+                    android:contentDescription="Logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_title"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/text_xxl"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/space_md" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setup_subtitle"
+                    android:textColor="@color/text2"
+                    android:textSize="@dimen/text_sm"
+                    android:layout_marginTop="@dimen/space_xs" />
+            </LinearLayout>
+
+            <!-- Avatar -->
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/profile_picture" android:textColor="@color/text2"
+                android:textSize="@dimen/text_sm" android:textStyle="bold" />
+
+            <FrameLayout android:id="@+id/setupAvatarWrap"
+                android:layout_width="72dp" android:layout_height="72dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_sm"
+                android:layout_marginBottom="@dimen/space_lg">
+                <View android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@drawable/bg_avatar_setup" />
+                <TextView android:id="@+id/setupAvatarPlaceholder"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:gravity="center" android:text="📷" android:textSize="28sp" />
+                <ImageView android:id="@+id/setupAvatarPreview"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:visibility="gone"
+                    android:contentDescription="Avatar" />
+            </FrameLayout>
+
+            <!-- Name -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Name" android:textColor="@color/text2"
+                android:textSize="@dimen/text_sm" android:textStyle="bold"
+                android:layout_marginBottom="@dimen/space_xs" />
+
+            <EditText android:id="@+id/setupName"
+                android:layout_width="match_parent" android:layout_height="@dimen/input_height"
+                android:hint="@string/enter_name"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="@dimen/space_md"
+                android:textColor="@color/text" android:textColorHint="@color/text3"
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"
+                android:layout_marginBottom="@dimen/space_lg" />
+
+            <!-- API Key -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="API Key" android:textColor="@color/text2"
+                android:textSize="@dimen/text_sm" android:textStyle="bold"
+                android:layout_marginBottom="@dimen/space_xs" />
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="@dimen/input_height"
+                android:orientation="horizontal" android:layout_marginBottom="@dimen/space_xl">
+
+                <EditText android:id="@+id/setupApiKey"
+                    android:layout_width="0dp" android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/enter_api_key"
+                    android:background="@drawable/bg_input"
+                    android:paddingHorizontal="@dimen/space_md"
+                    android:textColor="@color/text" android:textColorHint="@color/text3"
+                    android:inputType="textPassword"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no" />
+
+                <ImageView android:id="@+id/setupEyeToggle"
+                    android:layout_width="40dp" android:layout_height="match_parent"
+                    android:src="@drawable/ic_eye"
+                    android:padding="8dp"
+                    android:layout_marginStart="@dimen/space_xs"
+                    android:contentDescription="Toggle visibility" />
+            </LinearLayout>
+
+            <!-- Get Started Button -->
+            <TextView android:id="@+id/setupSaveBtn"
+                android:layout_width="match_parent" android:layout_height="@dimen/btn_height"
+                android:gravity="center"
+                android:text="@string/get_started"
+                android:textColor="@color/accent_text"
+                android:textSize="@dimen/text_md" android:textStyle="bold"
+                android:background="@drawable/bg_btn_primary"
+                android:alpha="0.5" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog"
+    android:layout_margin="16dp">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical|end"
+        android:padding="@dimen/space_sm">
+
+        <ImageView android:id="@+id/viewerFullscreen"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:src="@drawable/ic_fullscreen" android:padding="6dp"
+            android:background="@drawable/bg_ripple_accent"
+            android:contentDescription="Fullscreen" />
+
+        <ImageView android:id="@+id/viewerClose"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:src="@drawable/ic_close" android:padding="6dp"
+            android:background="@drawable/bg_ripple_accent"
+            android:contentDescription="Close" />
+    </LinearLayout>
+
+    <!-- Image -->
+    <ImageView android:id="@+id/viewerImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:maxHeight="420dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:contentDescription="Image" />
+
+    <!-- Info -->
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_lg">
+
+        <TextView android:id="@+id/viewerPrompt"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/text" android:textSize="@dimen/text_sm"
+            android:lineSpacingMultiplier="1.5" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/space_sm">
+            <TextView android:id="@+id/viewerModel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/accent" android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:background="@drawable/bg_count_btn"
+                android:paddingHorizontal="8dp" android:paddingVertical="2dp"
+                android:layout_marginEnd="8dp" />
+            <TextView android:id="@+id/viewerRatio"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/text3" android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:background="@drawable/bg_count_btn"
+                android:paddingHorizontal="8dp" android:paddingVertical="2dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Actions -->
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/space_lg"
+        android:paddingBottom="@dimen/space_lg">
+
+        <!-- Remix Button -->
+        <TextView android:id="@+id/viewerRemixBtn"
+            android:layout_width="match_parent" android:layout_height="48dp"
+            android:gravity="center"
+            android:text="⟲  Remix This"
+            android:textColor="@color/accent_text"
+            android:textSize="@dimen/text_md" android:textStyle="bold"
+            android:background="@drawable/bg_btn_generate"
+            android:layout_marginBottom="@dimen/space_md" />
+
+        <!-- Secondary Actions -->
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center" android:orientation="horizontal">
+
+            <ImageView android:id="@+id/viewerFavBtn"
+                android:layout_width="44dp" android:layout_height="44dp"
+                android:src="@drawable/ic_fav" android:padding="10dp"
+                android:background="@drawable/bg_btn_ghost"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Favorite" />
+
+            <ImageView android:id="@+id/viewerDownloadBtn"
+                android:layout_width="44dp" android:layout_height="44dp"
+                android:src="@drawable/ic_download" android:padding="10dp"
+                android:background="@drawable/bg_btn_ghost"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Download" />
+
+            <ImageView android:id="@+id/viewerDeleteBtn"
+                android:layout_width="44dp" android:layout_height="44dp"
+                android:src="@drawable/ic_delete" android:padding="10dp"
+                android:background="@drawable/bg_btn_ghost"
+                android:contentDescription="Delete" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

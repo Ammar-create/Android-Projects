@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tablet overrides -->
+    <dimen name="sidebar_width">260dp</dimen>
+    <dimen name="panel_width">400dp</dimen>
+    <dimen name="gallery_grid_spacing">12dp</dimen>
+    <dimen name="gallery_grid_min_col">220dp</dimen>
+    <dimen name="card_min_width">220dp</dimen>
+    <dimen name="text_xxl">28sp</dimen>
+    <dimen name="space_lg">20dp</dimen>
+    <dimen name="space_xl">24dp</dimen>
+</resources>

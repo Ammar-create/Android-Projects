@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <!-- Main content area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <!-- Sidebar -->
+        <LinearLayout
+            android:id="@+id/sidebar"
+            android:layout_width="@dimen/sidebar_width"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/bg_sidebar"
+            android:translationX="-260dp">
+
+            <!-- Sidebar Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_xl"
+                android:paddingBottom="@dimen/space_lg">
+                <ImageView
+                    android:layout_width="28dp" android:layout_height="28dp"
+                    android:src="@drawable/ic_bolt"
+                    android:contentDescription="Logo" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/text_lg"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:letterSpacing="-0.02" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" />
+
+            <!-- Nav Items -->
+            <LinearLayout
+                android:id="@+id/sidebarNav"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/space_sm">
+
+                <TextView android:id="@+id/navGenerate"
+                    android:layout_width="match_parent" android:layout_height="@dimen/nav_item_height"
+                    android:text="  ⚡  Generate" android:gravity="center_vertical"
+                    android:textColor="@color/accent" android:textSize="@dimen/text_md"
+                    android:textStyle="bold" android:background="@drawable/bg_nav_active"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView android:id="@+id/navGallery"
+                    android:layout_width="match_parent" android:layout_height="@dimen/nav_item_height"
+                    android:text="  ▦  Gallery" android:gravity="center_vertical"
+                    android:textColor="@color/text2" android:textSize="@dimen/text_md"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView android:id="@+id/navRemix"
+                    android:layout_width="match_parent" android:layout_height="@dimen/nav_item_height"
+                    android:text="  ⟲  Remix" android:gravity="center_vertical"
+                    android:textColor="@color/text2" android:textSize="@dimen/text_md"
+                    android:layout_marginBottom="4dp" />
+            </LinearLayout>
+
+            <!-- Sidebar Footer: Settings -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" />
+            <TextView android:id="@+id/navSettings"
+                android:layout_width="match_parent" android:layout_height="@dimen/nav_item_height"
+                android:text="  ⚙  Settings" android:gravity="center_vertical"
+                android:textColor="@color/text2" android:textSize="@dimen/text_md"
+                android:paddingHorizontal="@dimen/space_sm" />
+        </LinearLayout>
+
+        <!-- Main content -->
+        <LinearLayout
+            android:id="@+id/mainContent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Top Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/topbar_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/space_lg"
+                android:background="@color/bg">
+
+                <!-- Hamburger (mobile) -->
+                <ImageView android:id="@+id/btnMenu"
+                    android:layout_width="40dp" android:layout_height="40dp"
+                    android:src="@drawable/ic_menu"
+                    android:padding="8dp"
+                    android:background="@drawable/bg_ripple_accent"
+                    android:contentDescription="Menu" />
+
+                <TextView android:id="@+id/topbarTitle"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Generate" android:textColor="@color/text"
+                    android:textSize="@dimen/text_lg" android:textStyle="bold"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:letterSpacing="-0.02" />
+
+                <!-- Avatar -->
+                <FrameLayout android:id="@+id/btnAvatar"
+                    android:layout_width="@dimen/avatar_size" android:layout_height="@dimen/avatar_size">
+                    <View android:id="@+id/avatarBg"
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:background="@drawable/bg_avatar" />
+                    <TextView android:id="@+id/avatarLetter"
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:gravity="center" android:textColor="@color/accent"
+                        android:textSize="@dimen/text_md" android:textStyle="bold" />
+                    <ImageView android:id="@+id/avatarImg"
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:scaleType="centerCrop" android:visibility="gone"
+                        android:contentDescription="Avatar" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" />
+
+            <!-- Content Container -->
+            <FrameLayout
+                android:id="@+id/contentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Sidebar Overlay -->
+    <View android:id="@+id/sidebarOverlay"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@drawable/bg_scrim"
+        android:clickable="true" android:focusable="true"
+        android:visibility="gone" />
+
+    <!-- Right Panel Container -->
+    <FrameLayout android:id="@+id/panelContainer"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <!-- Generation Overlay -->
+    <FrameLayout android:id="@+id/genOverlay"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="#EA0A0A0F"
+        android:visibility="gone" android:clickable="true" android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:orientation="vertical"
+            android:gravity="center" android:padding="@dimen/space_xxl">
+            <FrameLayout
+                android:layout_width="160dp" android:layout_height="160dp">
+                <View android:id="@+id/genOrb"
+                    android:layout_width="80dp" android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_btn_primary" />
+            </FrameLayout>
+            <TextView android:id="@+id/genPromptDisplay"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/text2" android:textSize="@dimen/text_sm"
+                android:gravity="center" android:maxLines="2"
+                android:layout_marginTop="@dimen/space_xl"
+                android:paddingHorizontal="@dimen/space_xxl" />
+            <ProgressBar android:id="@+id/genProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="260dp" android:layout_height="4dp"
+                android:layout_marginTop="@dimen/space_lg"
+                android:progressDrawable="@android:drawable/progress_horizontal"
+                android:indeterminate="false" android:max="100" />
+            <TextView android:id="@+id/genStatus"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/generating" android:textColor="@color/text2"
+                android:textSize="@dimen/text_sm" android:textStyle="bold"
+                android:layout_marginTop="@dimen/space_sm" />
+            <TextView android:id="@+id/genCounter"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/text3" android:textSize="@dimen/text_xs"
+                android:fontFamily="monospace" android:layout_marginTop="@dimen/space_xs" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Toast Container -->
+    <LinearLayout android:id="@+id/toastContainer"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:orientation="vertical" android:gravity="center_horizontal"
+        android:padding="@dimen/space_lg" />
+
+</FrameLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Kinetic Dark Theme -->
+    <color name="bg">#FF0A0A0F</color>
+    <color name="bg2">#FF12121A</color>
+    <color name="bg3">#FF1A1A25</color>
+    <color name="surface">#FF1E1E2A</color>
+    <color name="surface2">#FF252535</color>
+    <color name="border">#FF2A2A3A</color>
+    <color name="text">#FFE8E8F0</color>
+    <color name="text2">#FF9898B0</color>
+    <color name="text3">#FF6A6A80</color>
+
+    <!-- Orange Accent -->
+    <color name="accent">#FFF5A623</color>
+    <color name="accent2">#FFFF6B35</color>
+    <color name="accent_dim">#26F5A623</color>
+    <color name="accent_glow">#4DF5A623</color>
+    <color name="accent_text">#FFFFFFFF</color>
+
+    <!-- Functional -->
+    <color name="error">#FFEF4444</color>
+    <color name="success">#FF22C55E</color>
+    <color name="warn">#FFEAB308</color>
+    <color name="ripple">#20F5A623</color>
+    <color name="scrim">#B3000000</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Sidebar -->
+    <color name="sidebar_bg">#FF12121A</color>
+    <color name="nav_active_bg">#26F5A623</color>
+</resources>

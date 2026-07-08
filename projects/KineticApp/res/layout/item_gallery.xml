@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card">
+
+    <ImageView android:id="@+id/gridImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="Generated image" />
+
+    <!-- Model Badge -->
+    <TextView android:id="@+id/gridBadge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="8dp"
+        android:paddingHorizontal="8dp" android:paddingVertical="2dp"
+        android:textColor="@color/accent" android:textSize="10sp"
+        android:fontFamily="monospace"
+        android:background="#99000000" />
+
+    <!-- Favorite indicator -->
+    <TextView android:id="@+id/gridFavBadge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="8dp"
+        android:text="♥" android:textColor="#EF4444" android:textSize="14sp"
+        android:visibility="gone" />
+
+    <!-- Bottom overlay with name -->
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="#CC000000"
+        android:padding="8dp">
+        <TextView android:id="@+id/gridName"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/text" android:textSize="12sp"
+            android:textStyle="bold"
+            android:maxLines="1" android:ellipsize="end" />
+        <TextView android:id="@+id/gridDate"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/text3" android:textSize="10sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kinetic</string>
+    <string name="welcome_title">Welcome to Kinetic</string>
+    <string name="setup_subtitle">AI Image Studio</string>
+    <string name="enter_name">Your name</string>
+    <string name="enter_api_key">Enter your AquaDevs API key</string>
+    <string name="get_started">Get Started</string>
+    <string name="profile_picture">Profile Picture</string>
+
+    <!-- Nav -->
+    <string name="nav_generate">Generate</string>
+    <string name="nav_gallery">Gallery</string>
+    <string name="nav_remix">Remix</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Generate -->
+    <string name="prompt_hint">Describe the image you want to create...</string>
+    <string name="enhance_prompt">Enhance Prompt</string>
+    <string name="generate_btn">Generate</string>
+    <string name="model_label">Model</string>
+    <string name="ratio_label">Aspect Ratio</string>
+    <string name="count_label">Count</string>
+    <string name="style_label">Style</string>
+    <string name="reference_image">Reference Image</string>
+    <string name="tap_to_add_ref">Tap to add reference image</string>
+    <string name="clear_ref">Clear</string>
+    <string name="random_prompt">Random prompt</string>
+
+    <!-- Gallery -->
+    <string name="tab_all">All</string>
+    <string name="tab_recent">Recent</string>
+    <string name="tab_favorites">Favorites</string>
+    <string name="search_hint">Search images...</string>
+    <string name="empty_gallery">No images yet</string>
+    <string name="empty_gallery_sub">Generate your first image to see it here</string>
+    <string name="image_count">0</string>
+
+    <!-- Remix -->
+    <string name="remix_source_gallery">Gallery</string>
+    <string name="remix_source_upload">Upload</string>
+    <string name="select_source_image">Select a source image</string>
+    <string name="remix_prompt_hint">Describe the transformation...</string>
+    <string name="remix_btn">Remix</string>
+    <string name="pick_image">Pick Image</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="section_profile">Profile</string>
+    <string name="section_appearance">Appearance</string>
+    <string name="section_models">Image Models</string>
+    <string name="section_enhance">Enhancement</string>
+    <string name="section_naming">Auto-Naming</string>
+    <string name="section_remix">Remix</string>
+    <string name="section_storage">Storage</string>
+    <string name="section_about">About</string>
+    <string name="delete_models">Delete Models</string>
+    <string name="add_model">Add Custom Model</string>
+    <string name="model_id_hint">Model ID (e.g. flux-2)</string>
+    <string name="model_name_hint">Display Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="confirm">Confirm</string>
+    <string name="close">Close</string>
+    <string name="select_models_to_delete">Select models to delete</string>
+    <string name="no_models_to_delete">No custom models to delete</string>
+    <string name="enable_enhance">Enable Prompt Enhancement</string>
+    <string name="enable_naming">Enable Auto-Naming</string>
+    <string name="enable_web_search">Enable Web Search</string>
+    <string name="enhance_prompt_label">Enhancement System Prompt</string>
+    <string name="theme_label">Theme</string>
+    <string name="orange_theme">Orange</string>
+    <string name="blue_theme">Blue</string>
+    <string name="animations_label">Animations</string>
+    <string name="save_images_label">Save to Gallery</string>
+    <string name="storage_permission_needed">Storage permission is required to save images</string>
+    <string name="grant_permission">Grant Permission</string>
+
+    <!-- Viewer -->
+    <string name="remix_this">Remix This</string>
+    <string name="download">Download</string>
+    <string name="fullscreen">Fullscreen</string>
+    <string name="added_to_favorites">Added to favorites</string>
+    <string name="removed_from_favorites">Removed from favorites</string>
+    <string name="image_saved">Image saved to gallery</string>
+    <string name="image_deleted">Image deleted</string>
+    <string name="confirm_delete">Are you sure you want to delete this image?</string>
+    <string name="confirm_delete_models_title">Delete Models</string>
+
+    <!-- Generation -->
+    <string name="generating">Generating...</string>
+    <string name="enhancing">Enhancing prompt...</string>
+    <string name="naming">Naming image...</string>
+    <string name="generation_complete">Generation complete!</string>
+    <string name="generation_failed">Generation failed</string>
+
+    <!-- Toast -->
+    <string name="setup_complete">Welcome to Kinetic!</string>
+    <string name="prompt_enhanced">Prompt enhanced</string>
+    <string name="error_api_key">API key is required</string>
+    <string name="error_prompt">Please enter a prompt</string>
+    <string name="error_network">Network error. Check your connection.</string>
+    <string name="error_generic">Something went wrong</string>
+</resources>

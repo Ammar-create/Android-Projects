@@ -10,38 +10,38 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    
+
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-    
+
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-    
+
     - name: Install Android SDK components
       run: |
         sdkmanager "platform-tools" "build-tools;34.0.0" "platforms;android-34"
-    
+
     - name: Generate debug keystore
       run: |
         rm -f keystore.jks
-        keytool -genkeypair -v -keystore keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias androidkey -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
-      working-directory: projects/ReminderApp
-    
-    - name: Build APK
+        keytool -genkeypair -v -keystore keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias androidkey -storepass android -keypass android -dname "CN=Kinetic,O=Akinetic,C=US"
+      working-directory: projects/KineticApp
+
+    - name: Build KineticApp APK
       run: |
         chmod +x build.sh
-        ./build.sh projects/ReminderApp
-    
+        ./build.sh projects/KineticApp
+
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-signed
-        path: projects/ReminderApp/build/apk/app-signed.apk
+        name: kinetic-app-signed
+        path: projects/KineticApp/build/apk/app-signed.apk
         if-no-files-found: error

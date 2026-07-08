@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dialog"
+    android:layout_margin="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_xl">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_lg">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/settings_title" android:textColor="@color/text"
+                android:textSize="@dimen/text_lg" android:textStyle="bold" />
+            <ImageView android:id="@+id/settingsClose"
+                android:layout_width="36dp" android:layout_height="36dp"
+                android:src="@drawable/ic_close" android:padding="6dp"
+                android:contentDescription="Close" />
+        </LinearLayout>
+
+        <!-- Profile Section -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/section_profile" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_sm" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_lg">
+            <FrameLayout android:id="@+id/settingsAvatarWrap"
+                android:layout_width="52dp" android:layout_height="52dp"
+                android:layout_marginEnd="@dimen/space_md">
+                <View android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@drawable/bg_avatar_setup" />
+                <ImageView android:id="@+id/settingsAvatarImg"
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:scaleType="centerCrop" android:contentDescription="Avatar" />
+            </FrameLayout>
+            <EditText android:id="@+id/settingsName"
+                android:layout_width="0dp" android:layout_height="@dimen/input_height"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="@dimen/space_md"
+                android:textColor="@color/text" android:textColorHint="@color/text3"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <!-- Appearance Section -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/border" android:layout_marginBottom="@dimen/space_lg" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/section_appearance" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_sm" />
+
+        <!-- Theme -->
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_md">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/theme_label" android:textColor="@color/text" />
+            <TextView android:id="@+id/themeOrange"
+                android:layout_width="wrap_content" android:layout_height="@dimen/chip_height"
+                android:text="● Orange" android:gravity="center"
+                android:textColor="@color/accent" android:textSize="@dimen/text_sm"
+                android:background="@drawable/bg_chip_active"
+                android:paddingHorizontal="@dimen/space_md"
+                android:layout_marginEnd="4dp" />
+            <TextView android:id="@+id/themeBlue"
+                android:layout_width="wrap_content" android:layout_height="@dimen/chip_height"
+                android:text="● Blue" android:gravity="center"
+                android:textColor="@color/text2" android:textSize="@dimen/text_sm"
+                android:background="@drawable/bg_chip"
+                android:paddingHorizontal="@dimen/space_md" />
+        </LinearLayout>
+
+        <!-- Animations Toggle -->
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_lg">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/animations_label" android:textColor="@color/text" />
+            <Switch android:id="@+id/switchAnimations"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:checked="true"
+                android:thumbTint="@color/accent"
+                android:trackTint="@color/border" />
+        </LinearLayout>
+
+        <!-- Image Models Section -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/border" android:layout_marginBottom="@dimen/space_lg" />
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_sm">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/section_models" android:textColor="@color/text2"
+                android:textSize="@dimen/text_sm" android:textStyle="bold" />
+            <TextView android:id="@+id/btnDeleteModels"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/delete_models" android:textColor="@color/error"
+                android:textSize="@dimen/text_xs" android:padding="4dp" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/modelListContainer"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/space_md" />
+
+        <!-- Add Model Form -->
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="@dimen/space_md"
+            android:layout_marginBottom="@dimen/space_lg">
+            <EditText android:id="@+id/addModelId"
+                android:layout_width="match_parent" android:layout_height="@dimen/input_height"
+                android:hint="@string/model_id_hint"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="@dimen/space_md"
+                android:textColor="@color/text" android:textColorHint="@color/text3"
+                android:textSize="@dimen/text_sm"
+                android:layout_marginBottom="@dimen/space_sm" />
+            <EditText android:id="@+id/addModelName"
+                android:layout_width="match_parent" android:layout_height="@dimen/input_height"
+                android:hint="@string/model_name_hint"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="@dimen/space_md"
+                android:textColor="@color/text" android:textColorHint="@color/text3"
+                android:textSize="@dimen/text_sm"
+                android:layout_marginBottom="@dimen/space_sm" />
+            <TextView android:id="@+id/btnAddModel"
+                android:layout_width="match_parent" android:layout_height="@dimen/btn_height"
+                android:gravity="center"
+                android:text="@string/add_model" android:textColor="@color/accent_text"
+                android:textSize="@dimen/text_sm" android:textStyle="bold"
+                android:background="@drawable/bg_btn_primary" />
+        </LinearLayout>
+
+        <!-- Enhancement Section -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/border" android:layout_marginBottom="@dimen/space_lg" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/section_enhance" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_sm" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_md">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/enable_enhance" android:textColor="@color/text" />
+            <Switch android:id="@+id/switchEnhance"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:thumbTint="@color/accent" android:trackTint="@color/border" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_lg">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/enable_web_search" android:textColor="@color/text" />
+            <Switch android:id="@+id/switchWebSearch"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:thumbTint="@color/accent" android:trackTint="@color/border" />
+        </LinearLayout>
+
+        <!-- Auto-Naming Section -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/border" android:layout_marginBottom="@dimen/space_lg" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/section_naming" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_sm" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_lg">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/enable_naming" android:textColor="@color/text" />
+            <Switch android:id="@+id/switchNaming"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:thumbTint="@color/accent" android:trackTint="@color/border" />
+        </LinearLayout>
+
+        <!-- API Key Section -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/border" android:layout_marginBottom="@dimen/space_lg" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="API Key" android:textColor="@color/text2"
+            android:textSize="@dimen/text_sm" android:textStyle="bold"
+            android:layout_marginBottom="@dimen/space_xs" />
+        <EditText android:id="@+id/settingsApiKey"
+            android:layout_width="match_parent" android:layout_height="@dimen/input_height"
+            android:background="@drawable/bg_input"
+            android:paddingHorizontal="@dimen/space_md"
+            android:textColor="@color/text" android:textColorHint="@color/text3"
+            android:inputType="textPassword"
+            android:importantForAutofill="no" />
+
+        <!-- Save Button -->
+        <TextView android:id="@+id/settingsSave"
+            android:layout_width="match_parent" android:layout_height="@dimen/btn_height"
+            android:gravity="center"
+            android:text="@string/save" android:textColor="@color/accent_text"
+            android:textSize="@dimen/text_md" android:textStyle="bold"
+            android:background="@drawable/bg_btn_primary"
+            android:layout_marginTop="@dimen/space_xl" />
+    </LinearLayout>
+</ScrollView>
