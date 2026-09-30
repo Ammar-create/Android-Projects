@@ -31,7 +31,7 @@ jobs:
         gradle-version: '8.14.3'
 
     # NOTE: android-actions/setup-android@v3 is broken on current runners
-    # (fails on its own "Setup Android SDK" step). Use the SDK that ships
+    # (it fails on its own "Setup Android SDK" step). Use the SDK that ships
     # with the ubuntu-latest image and install the extra bits ourselves.
     - name: Locate Android SDK
       run: |
@@ -45,7 +45,6 @@ jobs:
         echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
         echo "$SDK/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
         echo "Using SDK: $SDK"
-        ls "$SDK"
 
     - name: Install Android SDK components
       run: |
@@ -56,26 +55,54 @@ jobs:
           echo "::error::sdkmanager not found"
           exit 1
         fi
-        echo "sdkmanager: $SM"
         yes | "$SM" --licenses > /dev/null 2>&1 || true
         "$SM" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
     - name: Build MUSE release APK
       working-directory: projects/MusePlayer
-      run: gradle assembleRelease --no-daemon --stacktrace
+      run: |
+        set -o pipefail
+        gradle assembleRelease --no-daemon --stacktrace 2>&1 | tee /tmp/muse-build.log
+
+    # Job logs need admin rights to download over the API, so surface the
+    # interesting part of the build log back into the repo instead.
+    - name: Publish build log
+      if: always()
+      run: |
+        set +e
+        LOG=/tmp/muse-build.log
+        if [ ! -f "$LOG" ]; then echo "no build log captured" > "$LOG"; fi
+        {
+          echo "### MUSE CI build log"
+          echo "commit: $GITHUB_SHA"
+          echo "run: $GITHUB_RUN_ID"
+          echo
+          echo "=== ERROR LINES ==="
+          grep -nE "^e: |error:|What went wrong|Execution failed|FAILURE:|Unresolved reference|Compilation error|Could not|Cannot access" "$LOG" | head -150
+          echo
+          echo "=== TAIL 250 ==="
+          tail -n 250 "$LOG"
+        } > projects/MusePlayer/BUILD-LOG.txt
+        git config user.name "muse-ci"
+        git config user.email "muse-ci@users.noreply.github.com"
+        git add -f projects/MusePlayer/BUILD-LOG.txt
+        git commit -m "ci: capture MUSE build log [skip ci]" > /dev/null 2>&1
+        git push > /dev/null 2>&1
+        echo "build log published"
 
     - name: Show outputs
+      if: success()
       run: find projects/MusePlayer/app/build/outputs -name '*.apk' -exec ls -la {} \;
 
     - name: Upload APK as artifact
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: muse-release-unsigned
         path: projects/MusePlayer/app/build/outputs/apk/release/*.apk
         if-no-files-found: error
 
-    # Public download path: release assets need no auth on a public repo,
-    # so the APK can be pulled straight from the releases page.
+    # Public download path: release assets need no auth on a public repo.
     - name: Publish APK to Release
       if: success()
       uses: softprops/action-gh-release@v2
