@@ -8,6 +8,9 @@ on:
       - '.github/workflows/build-muse.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,13 +30,35 @@ jobs:
       with:
         gradle-version: '8.14.3'
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+    # NOTE: android-actions/setup-android@v3 is broken on current runners
+    # (fails on its own "Setup Android SDK" step). Use the SDK that ships
+    # with the ubuntu-latest image and install the extra bits ourselves.
+    - name: Locate Android SDK
+      run: |
+        SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+        if [ -z "$SDK" ] || [ ! -d "$SDK" ]; then SDK=/usr/local/lib/android/sdk; fi
+        if [ ! -d "$SDK" ]; then
+          echo "::error::No Android SDK found on runner"
+          exit 1
+        fi
+        echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+        echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+        echo "$SDK/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+        echo "Using SDK: $SDK"
+        ls "$SDK"
 
     - name: Install Android SDK components
       run: |
-        yes | sdkmanager --licenses > /dev/null 2>&1 || true
-        sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+        SDK="$ANDROID_HOME"
+        SM="$SDK/cmdline-tools/latest/bin/sdkmanager"
+        if [ ! -x "$SM" ]; then SM="$(command -v sdkmanager || true)"; fi
+        if [ -z "$SM" ]; then
+          echo "::error::sdkmanager not found"
+          exit 1
+        fi
+        echo "sdkmanager: $SM"
+        yes | "$SM" --licenses > /dev/null 2>&1 || true
+        "$SM" "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
     - name: Build MUSE release APK
       working-directory: projects/MusePlayer
@@ -42,9 +67,26 @@ jobs:
     - name: Show outputs
       run: find projects/MusePlayer/app/build/outputs -name '*.apk' -exec ls -la {} \;
 
-    - name: Upload APK
+    - name: Upload APK as artifact
       uses: actions/upload-artifact@v4
       with:
         name: muse-release-unsigned
         path: projects/MusePlayer/app/build/outputs/apk/release/*.apk
         if-no-files-found: error
+
+    # Public download path: release assets need no auth on a public repo,
+    # so the APK can be pulled straight from the releases page.
+    - name: Publish APK to Release
+      if: success()
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: muse-build-${{ github.run_number }}
+        name: MUSE v2 (build ${{ github.run_number }})
+        body: |
+          Unsigned release APK for MUSE ${{ github.sha }}.
+          Sign locally with muse.keystore before installing.
+        files: projects/MusePlayer/app/build/outputs/apk/release/*.apk
+        prerelease: true
+        make_latest: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

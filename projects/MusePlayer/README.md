@@ -11,7 +11,8 @@ Two things in one APK:
 driven with zero UI — no screen flash, no app launch. Drives audio via the
 framework `MediaBrowser`/`MediaController` bound to Metrolist's MediaLibraryService.
 2. **A real UI.** Compose + Material 3 Expressive (`MaterialExpressiveTheme`,
-spring motion, Material You dynamic colour) with four tabs: Now / Queue / Library / Search.
+spring motion, Material You dynamic colour) with four tabs:
+Now / Queue / Library / Search.
 
 ## Headless API
 
@@ -23,15 +24,22 @@ am broadcast -n com.velvet.muse/.MuseReceiver -a com.velvet.muse.CMD \
 
 Read results with `logcat -d -s Muse`.
 
-Note: the broadcast **must** be explicit (`-n com.velvet.muse/.MuseReceiver`).
-Implicit broadcasts from shell are silently dropped.
+The broadcast **must** be explicit (`-n com.velvet.muse/.MuseReceiver`).
+Implicit broadcasts from shell are silently dropped, and a freshly installed app
+is in a stopped state until its first launch.
 
 ## Build
 
 Gradle 8.14.3 · AGP 8.13.2 · Kotlin 2.1.21 · material3 1.4.0 · compileSdk 36 · minSdk 24.
 
-CI: `.github/workflows/build-muse.yml` (Actions → "Build MUSE APK" → Run workflow).
-The workflow emits an **unsigned** release APK.
+CI: `.github/workflows/build-muse.yml` → Actions → "Build MUSE APK" → Run workflow.
+
+> **Runner note:** `android-actions/setup-android@v3` is broken on current
+> `ubuntu-latest` runners — it fails on its own "Setup Android SDK" step. This
+> workflow deliberately does not use it and instead drives the preinstalled SDK.
+> `Build Android APK` (KineticApp) still uses it, which is why that job fails.
+
+The workflow emits an **unsigned** release APK and attaches it to a GitHub Release.
 
 **Signing is deliberately off-GitHub** — the release keystore never leaves the device:
 
