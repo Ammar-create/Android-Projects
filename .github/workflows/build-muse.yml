@@ -1,0 +1,50 @@
+name: Build MUSE APK
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'projects/MusePlayer/**'
+      - '.github/workflows/build-muse.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.14.3'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Install Android SDK components
+      run: |
+        yes | sdkmanager --licenses > /dev/null 2>&1 || true
+        sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+
+    - name: Build MUSE release APK
+      working-directory: projects/MusePlayer
+      run: gradle assembleRelease --no-daemon --stacktrace
+
+    - name: Show outputs
+      run: find projects/MusePlayer/app/build/outputs -name '*.apk' -exec ls -la {} \;
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: muse-release-unsigned
+        path: projects/MusePlayer/app/build/outputs/apk/release/*.apk
+        if-no-files-found: error
