@@ -44,20 +44,17 @@ import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.QueueMusic
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Repeat
-import androidx.compose.material.icons.filled.RepeatOne
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
@@ -78,7 +75,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -108,6 +104,7 @@ class MainActivity : ComponentActivity() {
 
 private val TABS = listOf("Now", "Queue", "Library", "Search")
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun MuseApp() {
     var tab by remember { mutableIntStateOf(0) }
@@ -181,7 +178,7 @@ private fun HeaderBar() {
     }
 }
 
-@Composable
+@@Composable
 private fun PillTabs(selected: Int, onSelect: (Int) -> Unit) {
     Row(
         modifier = Modifier
@@ -286,20 +283,14 @@ private fun NowPlaying(tick: Long) {
             )
         )
 
+        // Shuffle / repeat are intentionally absent: the framework MediaController
+        // has no API for them. Only play / pause / skip / seek are reachable.
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(28.dp)
         ) {
-            IconButton(onClick = { MuseEngine.toggleShuffle() }) {
-                Icon(
-                    Icons.Filled.Shuffle,
-                    contentDescription = "shuffle",
-                    tint = if (MuseEngine.shuffleOn) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
             IconButton(onClick = { MuseEngine.prev() }) {
-                Icon(Icons.Filled.SkipPrevious, contentDescription = "previous", modifier = Modifier.size(34.dp))
+                Icon(Icons.Filled.SkipPrevious, contentDescription = "previous", modifier = Modifier.size(40.dp))
             }
             FilledIconButton(
                 onClick = { MuseEngine.toggle() },
@@ -315,15 +306,7 @@ private fun NowPlaying(tick: Long) {
                 )
             }
             IconButton(onClick = { MuseEngine.next() }) {
-                Icon(Icons.Filled.SkipNext, contentDescription = "next", modifier = Modifier.size(34.dp))
-            }
-            IconButton(onClick = { MuseEngine.cycleRepeat() }) {
-                Icon(
-                    if (MuseEngine.repeatMode == 1) Icons.Filled.RepeatOne else Icons.Filled.Repeat,
-                    contentDescription = "repeat",
-                    tint = if (MuseEngine.repeatMode != 0) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Icon(Icons.Filled.SkipNext, contentDescription = "next", modifier = Modifier.size(40.dp))
             }
         }
         Spacer(Modifier.height(24.dp))
@@ -379,7 +362,10 @@ private fun QueueScreen() {
         EmptyState(Icons.Filled.QueueMusic, "Queue is empty", "Start playback in Metrolist and it will show up here.")
         return
     }
-    LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = androidx.compose.foundation.layout.PaddingValues(12.dp)) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = androidx.compose.foundation.layout.PaddingValues(12.dp)
+    ) {
         itemsIndexed(MuseEngine.queue) { i, t ->
             val current = t.key == MuseEngine.queueKey
             Row(
@@ -545,7 +531,7 @@ private fun SearchScreen() {
         )
         Spacer(Modifier.height(6.dp))
         Text(
-            "Heads up: search hands off to Metrolist's own resolver, so it can land on a cover instead of the original. If that happens, pick the exact track from the Queue tab.",
+            "Search hands off to Metrolist's own resolver, so it can land on a cover instead of the original. If that happens, pick the exact track from the Queue tab.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -553,13 +539,22 @@ private fun SearchScreen() {
 }
 
 @Composable
-private fun EmptyState(icon: androidx.compose.ui.graphics.vector.ImageVector, title: String, body: String) {
+private fun EmptyState(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    title: String,
+    body: String
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Icon(icon, contentDescription = null, modifier = Modifier.size(56.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Icon(
+            icon,
+            contentDescription = null,
+            modifier = Modifier.size(56.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
         Spacer(Modifier.height(12.dp))
         Text(title, style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(4.dp))

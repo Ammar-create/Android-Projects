@@ -41,8 +41,11 @@ kotlin {
 }
 
 dependencies {
-    implementation("androidx.compose.material3:material3:1.4.0")
+    // Material 3 Expressive lives in the 1.5.0-alpha line. In 1.4.0 stable the
+    // MaterialExpressiveTheme / ExperimentalMaterial3ExpressiveApi declarations
+    // are compiled as `internal`, so they cannot be referenced from app code.
+    // This artifact declares kotlin-stdlib 2.2.20, hence the Kotlin 2.2.20 pin.
+    implementation("androidx.compose.material3:material3:1.5.0-alpha29")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("androidx.activity:activity-compose:1.12.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
 }

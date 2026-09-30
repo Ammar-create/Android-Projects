@@ -29,6 +29,17 @@ data class Node(
     val browsable: Boolean
 )
 
+/**
+ * Controller over Metrolist's media session.
+ *
+ * Deliberately uses the FRAMEWORK android.media.* controller/browser classes
+ * rather than media3. Consequences worth remembering:
+ *  - transport is limited to play/pause/stop/skip/seek/prepare/rating/speed.
+ *    Shuffle and repeat are NOT reachable: MediaController has no shuffleMode,
+ *    repeatMode, setShuffleMode or setRepeatMode (those are media3 / session-side).
+ *  - browsing is subscribe()-based only. MediaBrowser has no browse() method and
+ *    no BrowseCallback type; children arrive via SubscriptionCallback.
+ */
 object MuseEngine {
 
     const val TAG = "Muse"
@@ -39,6 +50,7 @@ object MuseEngine {
     private var appCtx: Context? = null
     private var browser: MediaBrowser? = null
     private var ctrl: MediaController? = null
+    private var subId: String? = null
 
     var status by mutableStateOf("not connected")
     var connected by mutableStateOf(false)
@@ -50,8 +62,6 @@ object MuseEngine {
     var positionMs by mutableStateOf(0L)
     var durationMs by mutableStateOf(0L)
     var speed by mutableStateOf(0f)
-    var shuffleOn by mutableStateOf(false)
-    var repeatMode by mutableStateOf(0)
     var queue by mutableStateOf<List<Track>>(emptyList())
     var queueKey by mutableStateOf(-1L)
     var children by mutableStateOf<List<Node>>(emptyList())
@@ -71,7 +81,7 @@ object MuseEngine {
 
     fun describe(): String =
         "state=$status connected=$connected track=\"$title\" / \"$artist\" playing=$playing " +
-        "pos=${positionMs} dur=${durationMs} speed=$speed queue=${queue.size} index=$queueKey"
+        "pos=$positionMs dur=$durationMs speed=$speed queue=${queue.size} index=$queueKey"
 
     fun connect(context: Context, onReady: (() -> Unit)? = null) {
         appCtx = context.applicationContext
@@ -122,7 +132,8 @@ object MuseEngine {
             speed = state.playbackSpeed
             positionMs = state.position.coerceAtLeast(0L)
             stamp = SystemClock.elapsedRealtime()
-            state.errorMessage?.let { status = it }
+            // getErrorMessage() returns CharSequence, not String.
+            state.errorMessage?.let { status = it.toString() }
         }
 
         override fun onMetadataChanged(md: MediaMetadata?) {
@@ -148,12 +159,14 @@ object MuseEngine {
             ctrl = null
         }
 
-        override fun onSessionEvent(event: String?, extras: Bundle?) {}
+        // Platform signature takes a non-null String.
+        override fun onSessionEvent(event: String, extras: Bundle?) {}
     }
 
     private fun pullArt(md: MediaMetadata?): Bitmap? {
         if (md == null) return null
-        val keys = intArrayOf(
+        // METADATA_KEY_* are String constants, not Int keys.
+        val keys = arrayOf(
             MediaMetadata.METADATA_KEY_ART,
             MediaMetadata.METADATA_KEY_ALBUM_ART,
             MediaMetadata.METADATA_KEY_DISPLAY_ICON
@@ -161,7 +174,10 @@ object MuseEngine {
         for (k in keys) {
             try { md.getBitmap(k)?.let { return it } } catch (_: Exception) {}
         }
-        val uriKeys = intArrayOf(MediaMetadata.METADATA_KEY_ART_URI, MediaMetadata.METADATA_KEY_ALBUM_ART_URI)
+        val uriKeys = arrayOf(
+            MediaMetadata.METADATA_KEY_ART_URI,
+            MediaMetadata.METADATA_KEY_ALBUM_ART_URI
+        )
         for (k in uriKeys) {
             val s = md.getString(k) ?: continue
             val bmp = decodeUri(s)
@@ -196,9 +212,6 @@ object MuseEngine {
             positionMs = st.position.coerceAtLeast(0L)
             stamp = SystemClock.elapsedRealtime()
         }
-        shuffleOn = c.shuffleMode == PlaybackState.SHUFFLE_MODE_ALL ||
-            c.shuffleMode == PlaybackState.SHUFFLE_MODE_GROUP
-        repeatMode = c.repeatMode
         refreshQueue()
     }
 
@@ -221,68 +234,72 @@ object MuseEngine {
     fun next() = ctrl?.transportControls?.skipToNext()
     fun prev() = ctrl?.transportControls?.skipToPrevious()
     fun stop() = ctrl?.transportControls?.stop()
+
     fun seekTo(ms: Long) {
         ctrl?.transportControls?.seekTo(ms)
         positionMs = ms
         stamp = SystemClock.elapsedRealtime()
     }
+
     fun skipToIndex(i: Int) {
         val t = queue.getOrNull(i) ?: return
         ctrl?.transportControls?.skipToQueueItem(t.key)
         queueKey = t.key
     }
-    fun toggleShuffle() {
-        val next = if (shuffleOn) PlaybackState.SHUFFLE_MODE_NONE else PlaybackState.SHUFFLE_MODE_ALL
-        ctrl?.transportControls?.setShuffleMode(next)
-        shuffleOn = !shuffleOn
-    }
-    fun cycleRepeat() {
-        val next = when (repeatMode) {
-            PlaybackState.REPEAT_MODE_OFF -> PlaybackState.REPEAT_MODE_ALL
-            PlaybackState.REPEAT_MODE_ALL -> PlaybackState.REPEAT_MODE_ONE
-            else -> PlaybackState.REPEAT_MODE_OFF
-        }
-        ctrl?.transportControls?.setRepeatMode(next)
-        repeatMode = next
-    }
+
     fun playFromSearch(q: String) {
         lastSearch = q
         ctrl?.transportControls?.playFromSearch(q, null)
     }
+
     fun playFromMediaId(id: String) {
         ctrl?.transportControls?.playFromMediaId(id, null)
     }
 
-    // ---------- browse ----------
+    // ---------- browse (subscribe-based) ----------
 
     fun browse(id: String) {
         val b = browser ?: return
         busy = true
+        val prev = subId
+        if (prev != null && prev != id) {
+            try { b.unsubscribe(prev) } catch (_: Exception) {}
+        }
+        subId = id
+        val cb = object : MediaBrowser.SubscriptionCallback() {
+            override fun onChildrenLoaded(parentId: String, items: MutableList<MediaBrowser.MediaItem>) {
+                main.post {
+                    children = items.map { toNode(it) }
+                    busy = false
+                    log("browse $parentId -> ${items.size} items")
+                }
+            }
+
+            override fun onChildrenLoaded(
+                parentId: String,
+                items: MutableList<MediaBrowser.MediaItem>,
+                options: Bundle
+            ) {
+                onChildrenLoaded(parentId, items)
+            }
+
+            override fun onError(parentId: String) {
+                main.post {
+                    children = emptyList()
+                    busy = false
+                    log("browse error on $parentId")
+                }
+            }
+
+            override fun onError(parentId: String, options: Bundle) {
+                onError(parentId)
+            }
+        }
         try {
-            b.browse(id, object : MediaBrowser.BrowseCallback() {
-                override fun onChildrenLoaded(parentId: String, list: MutableList<MediaBrowser.MediaItem>) {
-                    main.post {
-                        children = list.map { toNode(it) }
-                        busy = false
-                        log("browse $parentId -> ${list.size} items")
-                    }
-                }
-
-                override fun onChildrenLoaded(parentId: String, list: MutableList<MediaBrowser.MediaItem>, options: Bundle) {
-                    onChildrenLoaded(parentId, list)
-                }
-
-                override fun onError(parentId: String, error: Bundle?) {
-                    main.post {
-                        children = emptyList()
-                        busy = false
-                        log("browse error on $parentId")
-                    }
-                }
-            })
+            b.subscribe(id, cb)
         } catch (e: Exception) {
             busy = false
-            log("browse threw: " + e.message)
+            log("subscribe threw: " + e.message)
         }
     }
 
